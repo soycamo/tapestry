@@ -1,11 +1,9 @@
-require 'pp'
-
 class Kamishibai
   require 'iconv' unless String.method_defined?(:encode)
   attr_accessor :slideset
 
   # The Slip N Slide holds our wonky data.
-  SlipnSlide = Struct.new(:title, :raw_attributes) 
+  SlipnSlide = Struct.new(:title, :raw_attributes, :attributes) 
 
   def initialize(gamefile_path)
     #gamefile_path = File.expand_path "~/Projects/tapestry/test\ samples/KamishibaiMasterClass/gamefile.txt" #use ARGV here
@@ -24,21 +22,28 @@ class Kamishibai
       #puts line
       if line =~ %r{^\[(.+)\]}
         @slideset << current_slide unless current_slide.nil? 
-        current_slide = SlipnSlide.new(line[1..(line.length - 2)], [])
+        # use line.tr
+        current_slide = SlipnSlide.new(line[1..(line.length - 2)], '', [])
       else
-        current_slide.raw_attributes << line if current_slide
+        if line =~ %r{^\w}
+          line = line.rjust(line.length + 1)
+        end
+        current_slide.raw_attributes += line if current_slide
       end
 
     end
     @slideset << current_slide
-
+    
+    # dang I wanna use @slideset.collect!(&:parse_attributes) 'cause I <3 that syntax
+    @slideset.collect! { |slide| Kamishibai.parse_attributes!(slide) }
   end
 
-#  def parse_attributes(attr_array)
-#    attr_array.inject([]) do |memo, str| 
-#      memo << str
-#      end
-#    end
+  def self.parse_attributes!(slide)
+    attrs = slide.raw_attributes
+    attrs = attrs.gsub('@', '||@').split('||')
+    attrs.delete_if{|attr| attr.empty? }
+    slide.attributes = attrs
+  end
 end
 
 #example = slideset.select { |slide| slide.title == "A4" }.first                            
