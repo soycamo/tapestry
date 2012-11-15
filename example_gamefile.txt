@@ -1,0 +1,41 @@
+[A18]
+@image = Conclusion.bmp
+@music = shota(Rally the troops).mid
+@description = Conclusion. Here you just basically
+touch things up and prepare the story for its final form to be published (read by others),
+so this is what you need to remember...
+@option3 = --->
+@link3 = A19
+@option4 = <---
+@link4 = A17
+
+[A19]
+@anim = Purpose.bmp, research.bmp, hypothesis.bmp, experiment.bmp, results.bmp, conclusion.bmp
+@animloop = forever
+@animspeed = slow
+@music = shota(Rally the troops).mid
+@description = Purpose\nResearch\nHypothesis\nExperiment\nResults\nConclusion
+@option3 = Choose Another Instructor?
+@link3 = Story
+@option4 = <---
+@link4 = A18
+
+[A20]
+@image = intro.bmp
+@music = shota(Rally the troops).mid
+@description =
+The most important thing is just not to lose faith in yourself.
+As long as you believe you'll always be able to stand...
+There's too many people in this world to all like you and
+your work. 
+@option4 = --->
+@link4 = A21
+
+[A21]
+@image = intro.bmp
+@music = shota(Rally the troops).mid
+@description = Speak proud and your story will be heard.
+\n\n\nLaters,
+\nArima
+@option3 = Choose another Instructor
+@link3 = Advice
