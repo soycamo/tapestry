@@ -32,6 +32,7 @@ class Kamishibai
       end
 
     end
+    # welp I forgot to "clear the cache" so to speak
     @slideset << current_slide
     
     # dang I wanna use @slideset.collect!(&:parse_attributes) 'cause I <3 that syntax
@@ -43,6 +44,7 @@ class Kamishibai
     attrs = attrs.gsub('@', '||@').split('||')
     attrs.delete_if{|attr| attr.empty? }
     slide.attributes = attrs
+    slide
   end
 end
 

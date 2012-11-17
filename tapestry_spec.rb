@@ -13,7 +13,6 @@ describe Kamishibai do
   end
 
   it "should merge attributes that included newlines" do
-    pending
     slide = @ksb.slideset.first
     clean_attributes = 
       ["@image = Conclusion.bmp",
@@ -24,7 +23,8 @@ describe Kamishibai do
        "@option4 = <---",
        "@link4 = A17"]
 
-    Kamishibai.parse_attributes!(slide).should == clean_attributes
+    Kamishibai.parse_attributes!(slide)
+    slide.attributes.should == clean_attributes
   end
 
   it "should return the correct number of attributes" do
