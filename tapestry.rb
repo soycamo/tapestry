@@ -1,6 +1,22 @@
 require 'pp'
-class Kamishibai
+
+module KamishibaiUtils
   require 'iconv' unless String.method_defined?(:encode)
+
+  def convert_to_utf8(str)
+    # TODO change to auto detect encoding
+    if String.method_defined?(:encode) 
+      str.encode!('UTF-8', 'US-ASCII',{:invalid => :replace, :universal_newline => true})   
+    else
+      ic = Iconv.new('UTF-8', 'UTF-8//IGNORE')
+      str = ic.iconv(str)
+    end
+  end
+end
+
+class Kamishibai
+  include KamishibaiUtils
+
   attr_accessor :slideset
 
   # The Slip N Slide holds our wonky data.
@@ -18,19 +34,13 @@ class Kamishibai
     @slideset = []
     current_slide = nil
     gamefile.each do |line|
-      # TODO change to auto detect encoding
-      if String.method_defined?(:encode) 
-        line.encode!('UTF-8', 'US-ASCII',{:invalid => :replace, :universal_newline => true})   
-      else
-        ic = Iconv.new('UTF-8', 'UTF-8//IGNORE')
-        line = ic.iconv(line)
-      end
+      line = convert_to_utf8 line 
       line.strip!
-      #puts line
+
       if line =~ %r{^\[(.+)\]}
         @slideset << current_slide unless current_slide.nil? 
         # use line.tr
-        current_slide = SlipnSlide.new(line[1..(line.length - 2)], '', [])
+        current_slide = SlipnSlide.new(line.gsub(/\[|\]/, ''), '', [])
       else
         if line =~ %r{^\w}
           line = line.rjust(line.length + 1)
