@@ -1,9 +1,16 @@
+require 'pp'
 class Kamishibai
   require 'iconv' unless String.method_defined?(:encode)
   attr_accessor :slideset
 
   # The Slip N Slide holds our wonky data.
-  SlipnSlide = Struct.new(:title, :raw_attributes, :attributes) 
+  SlipnSlide = Struct.new(:title, :raw_attributes, :attributes) do
+    def to_twee
+      twee = ":: #{title}\n"
+      twee << attributes['description'] + "\n"
+      twee
+    end
+  end
 
   def initialize(gamefile_path)
     #gamefile_path = File.expand_path "~/Projects/tapestry/test\ samples/KamishibaiMasterClass/gamefile.txt" #use ARGV here
@@ -43,8 +50,17 @@ class Kamishibai
     attrs = slide.raw_attributes
     attrs = attrs.gsub('@', '||@').split('||')
     attrs.delete_if{|attr| attr.empty? }
-    slide.attributes = attrs
+    slide.attributes = Kamishibai.to_hash attrs
     slide
+  end
+
+  def self.to_hash ary
+    hash = {}
+    ary.collect do |str| 
+      key, value = str.split(' = ')
+      hash[key.tr('@', '')] = value
+    end
+    hash
   end
 end
 
