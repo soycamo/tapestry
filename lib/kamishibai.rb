@@ -35,6 +35,8 @@ class Kamishibai
 
   def initialize(gamefile_path)
     gamefile = File.open(gamefile_path, 'r')
+    raise "Can't load gamefile" unless gamefile
+
     @slideset = []
     current_slide = nil
     gamefile.each do |line|

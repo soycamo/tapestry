@@ -1,5 +1,5 @@
 require 'rspec'
-require './tapestry'
+require './lib/kamishibai'
 require 'pp'
 
 describe Kamishibai do
@@ -36,6 +36,8 @@ describe Kamishibai do
     twee_output = <<-TW
 :: A18
 Conclusion. Here you just basically touch things up and prepare the story for its final form to be published (read by others), so this is what you need to remember...
+
+
 TW
     slide = @ksb.slideset.first
     slide.to_twee.should == twee_output 
