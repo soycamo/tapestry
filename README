@@ -1,0 +1,16 @@
+TAPESTRY.
+
+A beautiful flowing cloth hanging from the walls, telling a story
+of times past this one. It can exist in this temporality, or it will
+wait to be invoked elsewhen.
+
+these experiences we have, they shape our imagination, our being, and fuel our creations.
+
+anyway you use the darn thing by saying at your command line:
+(pretend you're in bash)
+you@compy$  ruby tapestry.rb name_of_kamishibai/gamefile.txt > whatever_in_the_heck.tw
+
+if it doesn't work, leave a note in the issue tracker with at least part of the gamefile.txt.
+
+sincerely,
+camo.
