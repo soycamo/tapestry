@@ -35,8 +35,6 @@ describe Kamishibai do
         "copyright" => "Copyright © 1998 by Accursed Toys, Inc.\nAll Rights Reserved.",
         "contact"   => "lupa@otakuworld.com"}
 
-    Kamishibai.parse_attributes!(example_slide_1)
-    Kamishibai.parse_attributes!(example_slide_2)
     example_slide_1.attributes.should == clean_attributes_1
     example_slide_2.attributes.should == clean_attributes_2
   end
